@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Expletus+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Clock | Coderider</title>
+</head>
+<body>
+    <div class="mainBox light">
+        <div class="battery">
+            <span class="percentage">42%</span>
+            <i class="fa fa-battery-half"></i>
+        </div>
+        <div class="clockBox">
+            <div class="hr"></div>
+            <div class="min"></div>
+            <div class="sec"></div>
+            <span class="med">am</span>
+        </div>
+        <div class="info">
+            <div class="temp">
+                <span class="degree">22&#xb0;</span>
+                <i class="fa fa-certificate" aria-hidden="true"></i>
+            </div>
+            <div class="basic">
+                <span class="city">New Delhi</span>
+                <span class="date">Sunday, March 10 </span>
+            </div>
+            <button class="mode">
+                <i class="fa fa-sun-o"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const mod = document.querySelector('.mode');
+        mod.addEventListener('click', () => {
+            document.querySelector('.mainBox').classList.toggle('dark');
+            document.querySelector('.fa-sun-o').classList.toggle('fa-moon-o');
+        });
+
+        setInterval(() => {
+            navigator.getBattery().then(function(battery) {
+            var level = battery.level;
+            document.querySelector('.percentage').innerHTML = (level * 100) +'%';
+            });
+            const date = new Date();
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+            const seconds = date.getSeconds();
+            const hour = 30 * hours + minutes / 2;
+            const minute = 6 * minutes;
+            const second = 6 * seconds;
+            if(hours >= 12){
+                var period = 'pm';
+            }else{
+                var period = 'am';
+            }
+            document.querySelector(".med").innerHTML = period;
+            document.querySelector(".hr").style.transform = `rotate(${hour}deg)`;
+            document.querySelector(".min").style.transform = `rotate(${minute}deg)`;
+            document.querySelector(".sec").style.transform = `rotate(${second}deg)`;
+        },1000);
+
+    </script>
+</body>
+</html>
